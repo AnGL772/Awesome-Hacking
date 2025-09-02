@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: juice-shop
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - labnet
+
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: kali
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./tools:/home/kali/tools
+    networks:
+      - labnet
+
+networks:
+  labnet:
+    driver: bridge
